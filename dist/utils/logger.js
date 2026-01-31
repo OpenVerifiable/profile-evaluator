@@ -9,27 +9,23 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-
-// logger.js
-// simple logger that understanding if we are running in a test environment
-// and will not log in that case
+function isTestLikeRuntime() {
+    // Avoid referencing `jest` as an identifier (will fail under TS/ESM).
+    const maybeJest = globalThis?.jest;
+    return process.env.NODE_ENV === "test" || typeof maybeJest !== "undefined";
+}
 const logger = {
-  log: (...args) => {
-    if (process.env.NODE_ENV !== 'test' && typeof jest === 'undefined') {
-      console.log(...args);
-    }
-  },
-  warn: (...args) => {
-    if (process.env.NODE_ENV !== 'test' && typeof jest === 'undefined') {
-      console.warn(...args);
-    }
-  },
-  error: (...args) => {
-    // You might want errors to always log, even in tests, for visibility
-    console.error(...args);
-  }
+    log: (...args) => {
+        if (!isTestLikeRuntime())
+            console.log(...args);
+    },
+    warn: (...args) => {
+        if (!isTestLikeRuntime())
+            console.warn(...args);
+    },
+    error: (...args) => {
+        // Keep errors visible even in tests
+        console.error(...args);
+    },
 };
-
 export default logger;
-

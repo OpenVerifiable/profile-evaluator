@@ -2,35 +2,46 @@
   "name": "jpeg-trust-evaluator",
   "type": "module",
   "version": "1.0.0",
-  "description": "A command line tool to evaluate JSON data against JPEG Trust Profiles using json-formula rules.",
-  "main": "src/index.js",
+  "description": "A server/API tool to evaluate JSON data against JPEG Trust Profiles using json-formula rules.",
+  "main": "dist/server.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "start": "node src/index.js",
-    "test": "jest",
-    "eslint": "eslint src",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "lint": "eslint \"src/**/*.{ts,js}\"",
+    "lint:fix": "eslint \"src/**/*.{ts,js}\" --fix",
+    "test": "jest"
   },
   "dependencies": {
     "@adobe/json-formula": "^2.0.0-beta.1",
-    "commander": "^14.0.0",
     "handlebars": "^4.7.8",
     "jpeg-js": "^0.4.0",
     "jsonfile": "^6.1.0",
-    "yaml": "^2.8.0"
+    "yaml": "^2.8.0",
+    "fastify": "^4.14.1",
+    "commander": "^14.0.0"
   },
   "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@types/jest": "^30.0.0",
     "@eslint/js": "^9.28.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.47.0",
     "globals": "^16.2.0",
-    "jest": "^30.0.2"
+    "jest": "^30.0.2",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.0"
   },
   "keywords": [
     "jpeg",
     "trust",
     "evaluator",
+    "server",
     "json",
-    "command-line"
+    "api",
+    "typescript"
   ],
   "author": "Leonard Rosenthol",
   "license": "Apache-2.0"
